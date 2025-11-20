@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 'POST /login.php' => 'Login con JSON body',
                 'GET /login.php?username=X&password=Y' => 'Login con parámetros URL'
             ],
-            'nota' => 'Las contraseñas están hasheadas con password_hash()'
+            'nota' => 'Las contraseñas NO están hasheadas (solo para desarrollo)'
         ]);
         exit();
     }
@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        // Verificar si el usuario existe y la contraseña es correcta
-        if ($user && password_verify($password, $user['password'])) {
+        // Verificar si el usuario existe y la contraseña es correcta (SIN HASH)
+        if ($user && $password === $user['password']) {
             http_response_code(200);
             echo json_encode([
                 'success' => true,
@@ -144,8 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        // Verificar si el usuario existe y la contraseña es correcta
-        if ($user && password_verify($password, $user['password'])) {
+        // Verificar si el usuario existe y la contraseña es correcta (SIN HASH)
+        if ($user && $password === $user['password']) {
             http_response_code(200);
             echo json_encode([
                 'success' => true,
