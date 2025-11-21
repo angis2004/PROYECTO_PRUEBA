@@ -18,7 +18,7 @@ $host = '127.0.0.1';
 $port = '3306';
 $dbname = 'login_db';
 $db_user = 'root';
-$db_pass = 'Root2020';
+$db_pass = '';
 
 // Conectar a MySQL
 try {
